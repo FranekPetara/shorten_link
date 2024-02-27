@@ -1,0 +1,92 @@
+# version: '3'
+
+# services:
+#   db:
+#     image: postgres:14.1
+#     volumes:
+#       - postgresvolume:/var/lib/postgresql/data
+#     environment:
+#       - POSTGRES_DB
+#       - POSTGRES_USER
+#       - POSTGRES_PASSWORD
+#     ports:
+#       - "5432:5432"
+#   backend:
+#     build:
+#       context: ./backend
+#       dockerfile: Dockerfile
+#     ports:
+#       - "80:80"
+#     volumes:
+#       - ./backend/app:/code/app
+#     environment:
+#       - POSTGRES_DB
+#       - POSTGRES_USER
+#       - POSTGRES_PASSWORD
+#       - SECRET_KEY
+#       - DEBUG
+#       - ALLOWED_HOSTS
+#       - POSTGRES_HOST
+#     depends_on:
+#      - db
+
+
+#   frontend:
+#     build:
+#       context: ./frontend
+#     volumes:
+#       - ./frontend:/app
+#       - '/app/node_modules'
+#     ports:
+#       - '8080:8080'
+
+
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgres://postgres:password@db:5432/db_name
+      - POSTGRES_DB
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - SECRET_KEY
+      - DEBUG
+      - ALLOWED_HOSTS
+      - POSTGRES_HOST
+      - HASH_LENGTH
+    command: python manage.py runserver 0.0.0.0:8000
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./frontend:/app
+    depends_on:
+      - backend
+    command: npm run serve
+
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+    volumes:
+      - postgresvolume:/var/lib/postgresql/data
+
+volumes:
+  postgresvolume:
+
+
+
