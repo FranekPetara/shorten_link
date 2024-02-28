@@ -1,14 +1,14 @@
 <template>
-  <CalculatorComponent/>
+  <ShortenLink/>
 </template>
 
 <script>
-import CalculatorComponent from './components/CalculatorComponent.vue'
+import ShortenLink from './components/ShortenLink.vue'
 
 export default {
   name: 'App',
   components: {
-    CalculatorComponent
+    ShortenLink
   }
 }
 </script>
