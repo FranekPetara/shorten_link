@@ -21,21 +21,18 @@
       <div v-if="listLastLinks.length > 0">
       <h2 class="subtitle" style="margin-left : 20px;" >Last Links</h2>
       <div class="box" style="border: 1px solid gray; background-color: transparent; ">
-
-          
-              <div v-for="(link, index) in listLastLinks" :key="index" class="inner-box">
-                <div class="link-container">
-                <h class="subtitle" >{{ link.original_url }}</h>
-                <a style='font-size: 10px;' :href="link.original_url">{{ link.short_url }}</a>
-                </div>
-                <div >
-                <button @click="copyToClipboard(link.short_url)" class="copy-button">
-                <i class="fas fa-copy"></i> 
-                </button>
-                </div>
-              </div>
-
-      </div>
+        <div v-for="(link, index) in listLastLinks" :key="index" class="inner-box">
+          <div class="link-container">
+            <h class="subtitle" >{{ link.original_url }}</h>
+            <a style='font-size: 10px;' :href="link.original_url">{{ link.short_url }}</a>
+          </div>
+          <div >
+            <button @click="copyToClipboard(link.short_url)" class="copy-button">
+              <i class="fas fa-copy"></i> 
+            </button>
+          </div>
+          </div>
+        </div>
       </div>
     </div>  
   </div>
